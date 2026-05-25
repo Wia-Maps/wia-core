@@ -1,0 +1,1 @@
+WIA is a Campus Operating System. This core framework is currently powering the Smart Campus initiative at Achievers University. We are opening this to the NACOS network to standardize institutional navigation across Nigeria.
