@@ -27,4 +27,3 @@ WIA is built to scale across the NACOS network. If you want to deploy a Smart Ca
 ## 🛡️ License
 Distributed under the MIT License. See `LICENSE` for more information.
 
-*Built with the Mamba Mentality. No noise. Just execution.*
