@@ -1,0 +1,23 @@
+{
+    "campusName": "University Name Template",
+    "shortName": "UNT",
+    "mapConfiguration": {
+      "defaultCenter": [5.5777750, 7.1608887],
+      "defaultZoom": 17,
+      "maxBounds": [
+        [5.5700000, 7.1500000], 
+        [5.5900000, 7.1700000]
+      ]
+    },
+    "featuresEnabled": {
+      "pathSnapping": true,
+      "utilityTracking": true,
+      "emergencyAlerts": true,
+      "adminPanel": true
+    },
+    "apiEndpoints": {
+      "routingEngine": "/api/v1/route",
+      "poiManager": "/api/v1/poi",
+      "utilityStatus": "/api/v1/utility/power"
+    }
+  }
