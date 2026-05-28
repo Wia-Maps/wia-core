@@ -1,0 +1,18 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/api/v1/:path*",
+      "destination": "https://wia-core-op3x.onrender.com/api/v1/:path*"
+    },
+    {
+      "source": "/ws/:path*",
+      "destination": "https://wia-core-op3x.onrender.com/ws/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

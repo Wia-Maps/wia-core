@@ -1,0 +1,71 @@
+{
+  "name": "Wia - Know Where. Know Now",
+  "short_name": "Wia",
+  "description": "Scalable, template-based map PWA for campus navigation, routing, and analytics",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "dir": "ltr",
+  "lang": "en-US",
+  "theme_color": "#0891b2",
+  "background_color": "#ffffff",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/logo.webp",
+      "sizes": "any",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo.webp",
+      "sizes": "any",
+      "type": "image/webp",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/iPhone-14-Plus-localhost.webp",
+      "sizes": "878x1778",
+      "type": "image/webp",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/Macbook-Air-localhost.webp",
+      "sizes": "2768x1590",
+      "type": "image/webp",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "View Map",
+      "short_name": "Map",
+      "description": "Open the campus map",
+      "url": "/map",
+      "icons": [
+        {
+          "src": "/image1.png",
+          "sizes": "900x900",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Admin Dashboard",
+      "short_name": "Admin",
+      "description": "View admin dashboard and analytics",
+      "url": "/admin",
+      "icons": [
+        {
+          "src": "/image.png",
+          "sizes": "600x600",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "categories": ["productivity", "utilities", "navigation"]
+}

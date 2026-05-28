@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Wia notification badge">
+  <rect width="96" height="96" rx="28" fill="#0f172a" />
+  <path
+    d="M48 16 28 50h13l-4 22 31-38H55L48 16Z"
+    fill="#fff"
+  />
+</svg>

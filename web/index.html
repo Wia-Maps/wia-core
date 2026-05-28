@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="favicon.jpeg" type="image/jpeg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Navigate your campus with precision. Real-time location tracking, campus routing, and live status updates - all in one app." />
+    <meta name="theme-color" content="#0891b2" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Wia" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/logo.webp" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="preload" as="image" href="/logo.webp" type="image/webp" fetchpriority="high" />
+
+    <style>
+      #boot-splash {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        background: #ffffff;
+        color: #0f172a;
+        font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      }
+
+      #boot-splash img {
+        width: min(520px, 92vw);
+        height: auto;
+        border-radius: 28px;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+      }
+
+      #boot-splash .boot-spinner {
+        width: 34px;
+        height: 34px;
+        border-radius: 999px;
+        border: 3px solid rgba(8, 145, 178, 0.18);
+        border-top-color: rgba(8, 145, 178, 0.78);
+        animation: bootSpin 0.9s linear infinite;
+      }
+
+      @keyframes bootSpin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:url" content="https://wia-core.vercel.app/" />
+    <meta property="og:title" content="Wia - Know where. Know now" />
+    <meta property="og:description" content="Get precise directions across campus with real-time location tracking and live building status updates. Works offline too." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://wia-core.vercel.app/logo.webp" />
+    <meta property="og:image:alt" content="Wia Logo" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Wia" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Wia - Know where. Know now" />
+    <meta name="twitter:description" content="Navigate with real-time routing, location tracking, and live status updates. Offline-ready PWA." />
+    <meta name="twitter:image" content="https://wia-core.vercel.app/logo.webp" />
+    <meta name="twitter:image:alt" content="Wia Logo" />
+    
+    <title>Wia</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      (function () {
+        var path = window.location.pathname.replace(/\/+$/, '') || '/';
+        if (path === '/') return;
+        var root = document.getElementById('root');
+        if (!root) return;
+        var splash = document.createElement('div');
+        splash.id = 'boot-splash';
+        splash.setAttribute('aria-label', 'Loading Wia');
+        splash.innerHTML =
+          '<img src="/logo.webp" alt="Wia" width="1024" height="1024" decoding="async" fetchpriority="high" />' +
+          '<div class="boot-spinner" aria-hidden="true"></div>';
+        root.appendChild(splash);
+      })();
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
