@@ -1,0 +1,37 @@
+// ===================================================================
+// WIA Smart Campus - Overpass Turbo Data Extraction Query
+// NOTE: This query utilizes the {{bbox}} statement. It will extract 
+// data ONLY for the area currently visible in your active viewport. 
+// Navigate to your campus on the map before executing.
+// ===================================================================
+
+[out:json][timeout:90];
+
+(
+  // 1. Buildings & Infrastructure
+  way["building"]({{bbox}});
+  relation["building"]({{bbox}});
+  
+  // 2. Navigation & Roads (Essential for path-snapping)
+  way["highway"]({{bbox}});
+  
+  // 3. Perimeter & Fencing
+  way["barrier"]({{bbox}});
+  
+  // 4. Sports, Leisure & Amenity Layers
+  way["leisure"]({{bbox}});
+  way["sport"]({{bbox}});
+  way["landuse"]({{bbox}});
+  
+  // 5. Specific Point-of-Interest Search
+  way["amenity"~"parking|cafe|place_of_worship|restaurant"]({{bbox}});
+  node["amenity"~"parking|cafe|place_of_worship|restaurant"]({{bbox}});
+  
+  // 6. Natural features (Trees/Water for landmarks)
+  way["natural"]({{bbox}});
+);
+
+// Output results with full geometry for GeoJSON conversion
+out body;
+>;
+out skel qt;

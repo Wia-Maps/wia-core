@@ -1,70 +1,29 @@
-# Wia Core
+# WIA: The Smart Campus Operating System
 
-Wia Core is a campus operations and mapping platform. The workspace is split into a React PWA, an Express API, and a Python route analytics worker.
+**Technology is not a luxury; it is the infrastructure of modern education.**
 
-## Codebases
+WIA is an open-source, high-precision Digital Twin and navigation engine built specifically for African university campuses. It transitions institutions from being passive consumers of global mapping tools (like Google Maps) to active producers of their own indigenous digital infrastructure.
 
-| Path | Purpose |
-| --- | --- |
-| `web/` | React + Vite progressive web app for the public campus map, navigation, live status, notifications, and admin workspace. |
-| `server/` | Express + MongoDB API for map datasets, locations, power reports, notifications, admin operations, route telemetry, and WebSocket updates. |
-| `python_worker/` | Standard-library Python worker that processes route telemetry into route candidates and routing-weight overlays. |
+## 🏗️ The Vision: More Than a Map
+Generic maps are built for cars and highways. WIA is built for students, administrators, and campus security. We don't just show you where a building is; we tell you how the campus breathes.
 
-## Quick Start
+* **Data Sovereignty:** The university owns its data. No waiting on third-party satellite updates.
+* **The Utility Layer:** Real-time tracking of campus infrastructure (e.g., generator power status, lab availability).
+* **Sub-Meter Precision:** Our proprietary **Path-Snapping Engine** routes users strictly along verified pedestrian footpaths, not "best guess" vehicular roads.
+* **Emergency Response:** Pinpoint coordinate routing reduces campus security and medical response times.
 
-Run each codebase from its own directory.
+## 📍 The Pilot: Achievers University (AU)
+WIA was conceptualized, built, and deployed at Achievers University, Owo. Built on the principles of *Knowledge, Leadership, and Integrity*, WIA serves as the official digital infrastructure for the AU Smart Campus initiative, proving that Nigerian students can engineer enterprise-grade systems.
 
-```bash
-cd server
-npm install
-copy .env.example .env
-npm run dev
-```
+## 🚀 The "University Starter Kit"
+WIA is built to scale across the NACOS network. If you want to deploy a Smart Campus OS for your institution, check out the `/kit` directory for deployment templates, Overpass Turbo queries, and executive pitch decks.
 
-```bash
-cd web
-npm install
-copy .env.example .env.local
-npm run dev
-```
+## 📖 Documentation
+- [The WIA Manifesto](./docs/MANIFESTO.md) - Why we build.
+- [Setup & Deployment Guide](./docs/SETUP_GUIDE.md) - Launch your campus in 48 hours.
+- [Technical Specs](./docs/TECHNICAL_SPEC.md) - The MERN stack and GeoJSON logic.
+- [WIA Academy](./tutorials/WIA_ACADEMY.md) - Learn to map your campus.
 
-```bash
-cd python_worker
-copy .env.example .env
-python route_analytics_worker.py --once
-```
+## 🛡️ License
+Distributed under the MIT License. See `LICENSE` for more information.
 
-Default local URLs:
-
-- Web app: `http://localhost:5173`
-- API health check: `http://localhost:5000/api/v1/health`
-- API base path: `http://localhost:5000/api/v1`
-- WebSocket paths: `/ws/power` and `/ws/live-location`
-
-## Local Configuration
-
-The server needs MongoDB and a JWT secret. The worker needs the server URL and the same analytics worker token configured on the server. The web app can use the local API proxy path (`/api/v1`) or a full API URL through `VITE_API_BASE_URL`.
-
-Never commit real secrets in `.env` files.
-
-## Main Capabilities
-
-- Campus map rendering from managed GeoJSON datasets
-- Public location search and location detail views
-- Routing graph loading, runtime navigation, and route previews
-- Live power status, reports, schedules, and admin controls
-- Favorite-location notifications and web push configuration
-- Admin workspace for locations, map datasets, route workflows, activity logs, and settings
-- Route telemetry ingestion and analytics-assisted candidate route discovery
-- WebSocket channels for live power and shared location updates
-
-## Documentation
-
-- [Web README](web/README.md)
-- [Server README](server/README.md)
-- [Python Worker README](python_worker/README.md)
-- [Route Analytics Worker API](docs/ROUTE_ANALYTICS_WORKER.md)
-
-## Repository Notes
-
-Static assets and sample datasets live in the repository root, `web/public`, and `server/public/data`.
