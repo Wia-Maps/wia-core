@@ -2,11 +2,9 @@
 
 Primary contacts for security reports, governance questions, and release coordination.
 
-> **Before publishing:** Replace placeholder values below with your real maintainer names and contact channels.
-
 | Role | Name | GitHub | Email |
 | --- | --- | --- | --- |
-| Project lead | _Your name_ | [@your-handle](https://github.com/your-handle) | your.email@university.edu.ng |
+| Team Lead | Japheth O. Egbedele | [@Japheth_Egbedele](https://github.com/Japheth_Egbedele) | egbedele-ac5696@achievers.edu.ng |
 | Campus / product | _Achievers WIA team_ | _org or handle_ | wia@yourcampus.edu.ng |
 
 ## How to reach us

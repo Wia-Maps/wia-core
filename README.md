@@ -48,7 +48,7 @@ Templates and extraction scripts live in `/kit` for NACOS-scale campus rollouts.
 
 ## Maintainers
 
-Contact and governance: [docs/MAINTAINERS.md](docs/MAINTAINERS.md) (update placeholder emails before publishing). Security: [SECURITY.md](SECURITY.md).
+Contact and governance: [docs/MAINTAINERS.md](docs/MAINTAINERS.md). Security: [SECURITY.md](SECURITY.md).
 
 ## Documentation
 
