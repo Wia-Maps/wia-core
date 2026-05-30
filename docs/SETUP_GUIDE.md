@@ -5,70 +5,107 @@ Follow this guide to deploy an isolated instance of the Smart Campus Operating S
 ## Prerequisites
 
 * Node.js (v18 or higher)
-* MongoDB Atlas Cluster (with GeoSpatial Indexing enabled)
-* OpenStreetMap Account (for iD Editor or JOSM tracing)
+* MongoDB (local or Atlas with geospatial indexing enabled)
+* OpenStreetMap account (for iD Editor or JOSM tracing)
 
-## 🛠️ Step-by-Step Deployment
+## Repository layout
 
-### 1. Repository Setup & Local Initialization
+| Path | Role |
+| --- | --- |
+| `server/` | Express API (port **5000**) |
+| `web/` | React + Vite PWA (port **5173**) |
+| `python_worker/` | Optional route analytics worker |
+| `kit/` | Overpass queries, pitch outline, planning config template |
+| `server/public/data/` | Campus GeoJSON seed fixtures (replace with your full bundle) |
 
-1. **Fork the Repository:** Navigate to the `wia-core` repository on GitHub and click the **Fork** button to create a copy under your account or organization.
-2. **Clone Locally:** Clone your fork to your workstation:
+## Step-by-step deployment
+
+### 1. Repository setup
+
+1. **Fork** `wia-core` on GitHub.
+2. **Clone** your fork:
 
    ```bash
    git clone https://github.com/YOUR_USERNAME/wia-core.git
    cd wia-core
    ```
 
-3. **Environment Setup:** Create a `.env` file at the root and configure your `MONGODB_URI` and `JWT_SECRET`:
+3. **Campus GeoJSON (maintainers):** Drop the full Achievers University (or your campus) export into:
+   - `server/public/data/sample.geojson` (locations)
+   - `server/public/data/campus-routing.geojson` (routing graph)
 
-   ```env
-   MONGODB_URI=your_mongodb_atlas_connection_string
-   JWT_SECRET=your_system_authentication_secret
-   ```
+   See [server/public/data/README.md](../server/public/data/README.md). Minimal placeholders ship so the API can boot before the real bundle is added.
 
-4. **Install and Run:**
+4. **Configure the web client** in `web/src/config/client.ts` (`campus_id`, map center, theme). The file `kit/config.template.json` is a planning mirror only; the app reads `client.ts` at runtime.
 
-   ```bash
-   npm install
-   npm run dev
-   ```
+### 2. Local initialization (two terminals)
 
-### 2. Administrative Initialization
+**Terminal 1 — API**
 
-Before the system can render data, you must provision an authorized administrative account to manage structural layers.
+```bash
+cd server
+cp .env.example .env
+# Edit .env: MONGODB_URI, JWT_SECRET, CLIENT_ORIGIN, optional Cloudinary for fellowship logos
+npm install
+npm run dev
+```
 
-1. **Bootstrap the Admin Account:** Run the following `curl` command in your terminal to register your primary root administrator:
+Verify: `curl http://localhost:5000/api/v1/health`
+
+**Terminal 2 — Web**
+
+```bash
+cd web
+cp .env.example .env.local
+# VITE_API_BASE_URL=/api/v1 uses the Vite proxy to localhost:5000
+npm install
+npm run dev
+```
+
+Open **http://localhost:5173** (map) and **http://localhost:5173/admin** (admin workspace).
+
+### 3. Administrative initialization
+
+1. **Bootstrap the admin account** (API must be running):
 
    ```bash
    curl -X POST http://localhost:5000/api/v1/admin/register \
      -H "Content-Type: application/json" \
-     -H "X-Initialization-Key: your_optional_secure_env_key" \
      -d '{"email":"admin@yourcampus.edu.ng","password":"secure-temporary-password"}'
    ```
 
-2. **Generate Master GeoJSON File:** Execute the Overpass Turbo extraction script (`kit/overpass_queries.txt`) inside your viewport, export the dataset, and compile it into a unified `master_campus.geojson` file.
-3. **Manual Configuration:** Log into the WIA Admin Panel surface (`http://localhost:3000/admin`) using your bootstrapped credentials. Upload your `master_campus.geojson` file to populate the base map, and begin manually linking spatial nesting nodes and real-time utility metadata.
+   Returns `409` if that email already exists. There is no `X-Initialization-Key` header in the current API.
+
+2. **Sign in** at http://localhost:5173/admin with the same credentials.
+
+3. **Base geometry:** Use Overpass Turbo with `kit/overpass_queries.txt`, export GeoJSON, and either replace the seed files under `server/public/data/` (before first DB seed) or upload via **Admin → Datasets**.
+
+4. **Enrichment:** Link spatial nesting nodes and utility metadata in the admin panel.
 
 ---
 
-## University Adoption Lifecycle
+## University adoption lifecycle
 
-If a new institution (like NACOS Covenant or Bowen) opens this repository today, this is the chronological sequence to transition from a clean code fork to a live campus deployment.
+### Phase 1: Institutional alignment and data mining
 
-### Phase 1: Institutional Alignment & Data Mining
+* **Fork and branding:** Fork `wia-core`; set `web/src/config/client.ts` and optional server `CAMPUS_ID` / env values.
+* **OSM verification:** Trace missing footpaths and buildings in OpenStreetMap over your campus bbox.
+* **Base geometry extraction:** Run the Overpass query and export clean GeoJSON primitives.
 
-* **Step 1: The Fork & Branding Check:** The university development team forks `wia-core` and modifies `kit/config.template.json` with their institutional names, target zoom parameters, and local map boundaries.
-* **Step 2: Satellite Tracing (OSM Verification):** The team opens OpenStreetMap (OSM) over their campus coordinates. They spend a mapping session tracing missing pedestrian pathways, walkways, and building outlines to ensure the underlying global database layer is accurate.
-* **Step 3: Base Geometry Extraction:** They run the custom query in Overpass Turbo to pull down their clean structural and navigation GeoJSON primitives.
+### Phase 2: Local hardening and administrative setup
 
-### Phase 2: Local Hardening & Administrative Setup
+* **Deploy and bootstrap:** MongoDB, two-terminal dev flow, `POST /api/v1/admin/register`.
+* **Spatial enrichment:** Upload master datasets; tag utilities and nested POIs on the ground.
 
-* **Step 4: Local Deployment & Bootstrapping:** The team sets up their localized database instances, boots the engine, and hits the `/api/v1/admin/register` endpoint via `curl` to unlock the admin panel.
-* **Step 5: The Spatial Enrichment Grind:** The team accesses the admin dashboard, uploads their master file, and walks the campus ground to tag utility specifics (e.g., identifying internal shops inside their student centers, tagging buildings with power grid lines).
+### Phase 3: Administrative approval and launch
 
-### Phase 3: Administrative Approval & Launch
+* **Executive pitch:** Use `kit/PITCH_DECK_OUTLINE.md` for management buy-in.
+* **Production:** Deploy `web` and `server` with `VITE_API_BASE_URL` pointing at your API; use a campus subdomain (e.g. `map.university.edu.ng`).
+* **Physical nodes:** QR plates at key facilities for student onboarding.
 
-* **Step 6: The VC/Pro-Chancellor Pitch:** Using the `kit/PITCH_DECK_OUTLINE.md` template, the student developers present the working local prototype to the university management to secure institutional backing, hosting resources, and official data access.
-* **Step 7: Production Deployment:** The sanitized application is pushed live to production cloud environments (e.g., Vercel, AWS, or institutional servers) with a public campus subdomain (`map.university.edu.ng`).
-* **Step 8: Physical Node Deployment (Mini-Launch):** Generating and printing physical QR-code plates mapped to specific coordinates, anchoring them outside key campus facilities to initiate student onboarding.
+## Further reading
+
+* [server/README.md](../server/README.md) — API, env vars, endpoints
+* [web/README.md](../web/README.md) — frontend, PWA, admin routes
+* [python_worker/README.md](../python_worker/README.md) — optional analytics worker
+* [docs/TECHNICAL_SPEC.md](./TECHNICAL_SPEC.md) — GeoJSON and architecture

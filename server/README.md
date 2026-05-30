@@ -121,7 +121,7 @@ Protected by `ANALYTICS_WORKER_TOKEN`.
 - `POST /analytics/worker/routing-weights`
 - `POST /analytics/worker/runs/summary`
 
-See `../docs/ROUTE_ANALYTICS_WORKER.md` for payload examples.
+See [../docs/ROUTE_ANALYTICS_WORKER.md](../docs/ROUTE_ANALYTICS_WORKER.md) and [../python_worker/README.md](../python_worker/README.md).
 
 ## WebSockets
 

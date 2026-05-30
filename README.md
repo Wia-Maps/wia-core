@@ -4,26 +4,62 @@
 
 WIA is an open-source, high-precision Digital Twin and navigation engine built specifically for African university campuses. It transitions institutions from being passive consumers of global mapping tools (like Google Maps) to active producers of their own indigenous digital infrastructure.
 
-## 🏗️ The Vision: More Than a Map
-Generic maps are built for cars and highways. WIA is built for students, administrators, and campus security. We don't just show you where a building is; we tell you how the campus breathes.
+## The vision: more than a map
 
-* **Data Sovereignty:** The university owns its data. No waiting on third-party satellite updates.
-* **The Utility Layer:** Real-time tracking of campus infrastructure (e.g., generator power status, lab availability).
-* **Sub-Meter Precision:** Our proprietary **Path-Snapping Engine** routes users strictly along verified pedestrian footpaths, not "best guess" vehicular roads.
-* **Emergency Response:** Pinpoint coordinate routing reduces campus security and medical response times.
+Generic maps are built for cars and highways. WIA is built for students, administrators, and campus security.
 
-## 📍 The Pilot: Achievers University (AU)
-WIA was conceptualized, built, and deployed at Achievers University, Owo. Built on the principles of *Knowledge, Leadership, and Integrity*, WIA serves as the official digital infrastructure for the AU Smart Campus initiative, proving that Nigerian students can engineer enterprise-grade systems.
+* **Data sovereignty:** The university owns its spatial data.
+* **Utility layer:** Real-time campus infrastructure (power, labs, accessibility).
+* **Sub-meter precision:** Path-snapping along verified pedestrian footpaths.
+* **Emergency response:** Pinpoint routing for security and medical dispatch.
 
-## 🚀 The "University Starter Kit"
-WIA is built to scale across the NACOS network. If you want to deploy a Smart Campus OS for your institution, check out the `/kit` directory for deployment templates, Overpass Turbo queries, and executive pitch decks.
+## The pilot: Achievers University
 
-## 📖 Documentation
-- [The WIA Manifesto](./docs/MANIFESTO.md) - Why we build.
-- [Setup & Deployment Guide](./docs/SETUP_GUIDE.md) - Launch your campus in 48 hours.
-- [Technical Specs](./docs/TECHNICAL_SPEC.md) - The MERN stack and GeoJSON logic.
-- [WIA Academy](./tutorials/WIA_ACADEMY.md) - Learn to map your campus.
+WIA was conceptualized and deployed at Achievers University, Owo. Reference GeoJSON for that campus belongs in `server/public/data/` (see [server/public/data/README.md](server/public/data/README.md)).
 
-## 🛡️ License
-Distributed under the MIT License. See `LICENSE` for more information.
+## Monorepo layout
 
+| Directory | Description |
+| --- | --- |
+| [web/](web/) | React + Vite PWA (map, admin, PWA) |
+| [server/](server/) | Express + MongoDB API and WebSockets |
+| [python_worker/](python_worker/) | Optional telemetry analytics worker |
+| [kit/](kit/) | Overpass queries, pitch outline, config template |
+| [docs/](docs/) | Manifesto, setup, technical spec, contributing |
+| [tutorials/](tutorials/) | Mapping academy and guides |
+
+Root-level `wia.html` / `wia.css` are an optional static beta landing page, separate from the React app.
+
+## Quick start
+
+```bash
+# Terminal 1
+cd server && cp .env.example .env && npm install && npm run dev
+
+# Terminal 2
+cd web && cp .env.example .env.local && npm install && npm run dev
+```
+
+Then register an admin via the API and open http://localhost:5173/admin. Full steps: [Setup & Deployment Guide](docs/SETUP_GUIDE.md).
+
+## University starter kit
+
+Templates and extraction scripts live in `/kit` for NACOS-scale campus rollouts.
+
+## Documentation
+
+- [The WIA Manifesto](docs/MANIFESTO.md)
+- [Setup & Deployment Guide](docs/SETUP_GUIDE.md)
+- [Technical Specification](docs/TECHNICAL_SPEC.md)
+- [Contributing](docs/CONTRIBUTING.md)
+- [WIA Academy](tutorials/WIA_ACADEMY.md)
+- [Mapping Guide](tutorials/MAPPING_GUIDE.md)
+- [Server README](server/README.md) · [Web README](web/README.md)
+
+## Security
+
+Report vulnerabilities per [SECURITY.md](SECURITY.md). Never commit `.env` files or real API secrets.
+
+## License
+
+Distributed under the MIT License. See [LICENSE](LICENSE).

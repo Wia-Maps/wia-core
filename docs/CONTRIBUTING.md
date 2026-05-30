@@ -1,31 +1,67 @@
 # Contributing to WIA Core
 
-First off, thank you for stepping up to build. WIA is an indigenous project designed to prove the engineering capability of our student network. By contributing, you are helping standardize digital infrastructure across campuses nationwide.
+Thank you for helping standardize digital infrastructure across campuses. We maintain a high bar for GeoJSON correctness, modularity, and deployability.
 
-We maintain a strict "no-noise, pure execution" standard for code quality. Please review these operational requirements before opening a Pull Request.
+## Architectural guarantees
 
----
+1. **GeoJSON (RFC 7946):** Coordinates are `[longitude, latitude]`. Closed polygons must repeat the first vertex as the last.
+2. **Data sovereignty:** Avoid proprietary map-tracking SDKs for core navigation.
+3. **Modular changes:** Prefer focused PRs; match existing patterns in `server/` and `web/`.
 
-## 🏗️ Architectural Guarantees
+## Local development
 
-Every contribution must respect the core engineering principles of the WIA ecosystem:
+Run the API and web app in separate terminals (see [SETUP_GUIDE.md](./SETUP_GUIDE.md)):
 
-1. **Strict GeoJSON Compliance:** We adhere to the RFC 7946 specification. All location arrays must be structured as `[Longitude, Latitude]`. If a submission reverses this order, the automated CI pipeline will reject it.
-2. **Data Sovereignty:** No code should introduce dependencies on proprietary, closed-source tracking APIs. We build and maintain our own spatial pipelines.
-3. **Zero-Maintenance Overhead:** Code must be modular, highly optimized, and structured for zero-downtime deployment patterns (e.g., stateless serverless endpoints).
+```bash
+cd server && npm install && npm run dev
+cd web && npm install && npm run dev
+```
 
----
+Optional: `python_worker/route_analytics_worker.py` with `ANALYTICS_WORKER_TOKEN` matching `server/.env`.
 
-## 🛠️ Git Workflow & Branching Strategy
+Before opening a PR from `web/`:
 
-We use a structured branch layout to maintain stability while shipping at high velocity.
+```bash
+npm run type-check
+npm run lint
+```
 
-* `main` — Production-ready, institutional deployments. Never commit directly here.
-* `dev` — Staging branch where features are integrated and tested.
-* `feature/feature-name` — Your isolated workspace for writing code.
+## Branching
 
-### The Lifecycle of a Contribution
-1. **Fork the Repo:** Create your fork of `wia-core`.
-2. **Branch Out:** Cut a clean feature branch from `dev`:
+* `main` — production-ready releases; no direct commits.
+* `dev` — integration branch.
+* `feature/<name>` — your work branch, cut from `dev`.
+
+## Contribution lifecycle
+
+1. Fork `wia-core` and clone your fork.
+2. Branch from `dev`:
+
    ```bash
+   git checkout dev
+   git pull upstream dev
    git checkout -b feature/your-feature-name
+   ```
+
+3. Implement and test locally (health check, map load, admin flows if touched).
+4. Commit with a clear message (what/why, not a file list).
+5. Push and open a PR into `dev` with:
+   - Summary of the change
+   - Test plan (commands run, screenshots for UI)
+   - Note any GeoJSON or migration impact
+
+## GeoJSON and map data PRs
+
+* Validate coordinate order and polygon closure ([TECHNICAL_SPEC.md](./TECHNICAL_SPEC.md)).
+* Large campus bundles belong under `server/public/data/` or admin import paths — do not embed megabyte GeoJSON inside TypeScript.
+* Routing graphs must satisfy server validation (`node_id`, `from`/`to` edges).
+
+## Code review expectations
+
+* No secrets in diffs (rotate anything accidentally committed).
+* API changes: update [server/README.md](../server/README.md) endpoint lists when routes change.
+* UI changes: keep campus-specific values in `web/src/config/client.ts`, not hardcoded in components.
+
+## Questions
+
+Open a GitHub issue for bugs or design questions before large refactors.

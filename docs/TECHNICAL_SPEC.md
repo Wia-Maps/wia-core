@@ -1,31 +1,88 @@
 # WIA Technical Specification
 
-## System Architecture Overview
-WIA is architected as a high-performance, low-latency client-server infrastructure optimized for real-time tracking, spatial mapping, and accurate pathfinding.
+## System architecture
 
-## 1. Data Geometry & GeoJSON Compliance
-The engine enforces absolute compliance with standard GeoJSON schemas (RFC 7946). 
+WIA is a client-server campus operating system:
 
-* **Coordinate Ordering:** The application strictly implements the **`[Longitude, Latitude]`** (X, Y) coordinate array standard. 
-* **Polygon Closure Rule:** For all building footprints and structural polygons, the vertex structure must guarantee that the first and final coordinate coordinate index match precisely (`coordinate[0] === coordinate[coordinate.length - 1]`).
+| Layer | Technology | Responsibility |
+| --- | --- | --- |
+| Web | React 18, Vite, TypeScript, Zustand | Map UI, admin workspace, PWA |
+| API | Express (ESM), Mongoose | REST `/api/v1`, JWT admin auth, datasets |
+| Data | MongoDB | Geo datasets, power reports, telemetry, notifications |
+| Realtime | `ws` on `/ws/power`, `/ws/live-location` | Live status streams |
+| Worker (optional) | Python 3.9+ stdlib | Route telemetry analytics |
 
-### Core Mapped Feature Schema
+```mermaid
+flowchart LR
+  WebApp[web PWA] --> API[server Express]
+  API --> MongoDB[(MongoDB)]
+  Worker[python_worker] --> API
+  WebApp -->|WebSocket| API
+```
+
+Deep frontend notes: [web/ARCHITECTURE.md](../web/ARCHITECTURE.md).
+
+## Configuration
+
+* **Runtime campus identity:** `web/src/config/client.ts` (`campus_id`, map center, feature flags).
+* **Planning template:** `kit/config.template.json` (not loaded by the app).
+* **API URL:** `VITE_API_BASE_URL` in `web/.env.local` (use `/api/v1` with Vite proxy in development).
+
+## Map datasets
+
+Two dataset types are stored in MongoDB and seeded from `server/public/data/` on first boot:
+
+| Type | Seed file | Content |
+| --- | --- | --- |
+| `locations` | `sample.geojson` | Buildings, POIs, nested locations |
+| `routing` | `campus-routing.geojson` | Pedestrian graph |
+
+Admin APIs under `/api/v1/admin/map/*` support feature CRUD, bulk upsert, bundle import, and revision history.
+
+## Authentication
+
+* Public map and power endpoints are unauthenticated (rate-limited).
+* Admin routes use JWT (HTTP-only cookie + bearer-compatible flows).
+* First admin: `POST /api/v1/admin/register` with JSON `{ "email", "password" }`.
+* Analytics worker: `ANALYTICS_WORKER_TOKEN` header on `/api/v1/analytics/worker/*`.
+
+## GeoJSON compliance (RFC 7946)
+
+* **Coordinate ordering:** `[longitude, latitude]` (X, Y).
+* **Polygon closure:** `coordinate[0] === coordinate[coordinate.length - 1]` for each ring.
+
+### Core location feature schema
+
 ```json
 {
   "type": "Feature",
   "properties": {
-    "id": "String (Unique Entity Identifier)",
-    "building": "String (Structural Type Tag)",
-    "name": "String (Official Structural Identification)",
-    "category": "String (Functional Designation)",
+    "id": "string",
+    "name": "string",
+    "type": "string",
+    "category": "string",
     "utilities": {
-      "hasPower": "Boolean",
-      "chargingNodesAvailable": "Integer",
-      "accessibilityRamps": "Boolean"
+      "hasPower": true,
+      "chargingNodesAvailable": 0,
+      "accessibilityRamps": true
     }
   },
   "geometry": {
     "type": "Polygon",
-    "coordinates": [[[ "Number (Lng)", "Number (Lat)" ]]]
+    "coordinates": [[[0.0, 0.0]]]
   }
 }
+```
+
+### Routing graph
+
+* **Nodes:** `Point` geometries with `properties.node_id`.
+* **Edges:** `LineString` with `from` / `to` node ids, or tagged for inference (`highway`, `kind=edge`).
+
+Validation is enforced in `server/src/services/routingGraphValidator.js`.
+
+## Related docs
+
+* [SETUP_GUIDE.md](./SETUP_GUIDE.md)
+* [ROUTE_ANALYTICS_WORKER.md](./ROUTE_ANALYTICS_WORKER.md)
+* [server/README.md](../server/README.md)
