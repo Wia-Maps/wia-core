@@ -104,7 +104,7 @@ src/
 
 ## API Integration
 
-The app reads its API base from `src/config/api.ts`. Development defaults to `/api/v1`; production defaults to the hosted Render API unless `VITE_API_BASE_URL` is set.
+The app reads its API base from `src/config/api.ts`. Development defaults to `/api/v1` (Vite proxies to `localhost:5000`). **Production requires `VITE_API_BASE_URL`** in your host environment. `vercel.json` in this repo is an example proxy only.
 
 Important public API areas used by the web app:
 

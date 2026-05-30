@@ -1,0 +1,26 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "node_seed_a",
+      "properties": { "node_id": "node_seed_a", "kind": "node", "name": "Starter node A" },
+      "geometry": { "type": "Point", "coordinates": [5.5839, 7.1646] }
+    },
+    {
+      "type": "Feature",
+      "id": "node_seed_b",
+      "properties": { "node_id": "node_seed_b", "kind": "node", "name": "Starter node B" },
+      "geometry": { "type": "Point", "coordinates": [5.5845, 7.1652] }
+    },
+    {
+      "type": "Feature",
+      "id": "edge_seed_ab",
+      "properties": { "from": "node_seed_a", "to": "node_seed_b", "kind": "edge" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[5.5839, 7.1646], [5.5845, 7.1652]]
+      }
+    }
+  ]
+}

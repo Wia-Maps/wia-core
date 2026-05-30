@@ -1,8 +1,6 @@
 /**
- * Client Configuration
- * 
- * This configuration is designed to be reusable across multiple campus deployments.
- * Customize these values for each campus/tenant without modifying component logic.
+ * Client configuration — fork adopters: set campus_id, map center, zoom, and theme here.
+ * Planning mirror (not loaded at runtime): kit/config.template.json
  */
 
 export const clientConfig = {
@@ -17,8 +15,7 @@ export const clientConfig = {
   
   // Map Configuration
   map: {
-    center: [7.1646, 
-5.5839] as [number, number], // Default map center coordinates
+    center: [5.5839, 7.1646] as [number, number],
     zoom: 16,
     minZoom: 13,
     maxZoom: 19,

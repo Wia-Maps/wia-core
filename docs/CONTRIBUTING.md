@@ -64,4 +64,5 @@ npm run lint
 
 ## Questions
 
-Open a GitHub issue for bugs or design questions before large refactors.
+* [Maintainers](./MAINTAINERS.md) — contacts (update placeholders before public release)
+* GitHub Issues for bugs or design questions before large refactors

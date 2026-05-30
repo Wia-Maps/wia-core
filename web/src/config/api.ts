@@ -1,7 +1,5 @@
-const DEFAULT_PRODUCTION_API_BASE_URL = 'https://wia-core-op3x.onrender.com/api/v1';
-const DEFAULT_API_BASE_URL = (import.meta as { env?: { PROD?: boolean } }).env?.PROD
-  ? DEFAULT_PRODUCTION_API_BASE_URL
-  : '/api/v1';
+/** Set VITE_API_BASE_URL in production (e.g. https://api.yourcampus.edu.ng/api/v1). */
+const DEFAULT_API_BASE_URL = '/api/v1';
 
   
 const getFrontendEnv = (): Record<string, string | undefined> => {

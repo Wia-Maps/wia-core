@@ -1,23 +1,51 @@
 # WIA Academy: Mapping Your Campus
 
-Welcome to the WIA mapping workflow. Building a digital twin requires precision and hierarchy. This academy will teach you how to extract global data and structure it for the WIA engine.
+Welcome to the WIA mapping workflow. Building a digital twin requires precision and hierarchy. This academy teaches how to extract global data and structure it for the WIA engine.
 
-## 🎬 Masterclass: The 3-Minute Deployment
-*Video Link: [Insert YouTube Link Here upon launch]*
+## Masterclass video
 
-### Phase 1: The OpenStreetMap (OSM) Extraction
-* **Tool:** Overpass Turbo / iD Editor.
-* **Action:** Tracing building footprints using satellite imagery.
-* **Rule:** Ensure the first and last coordinates match to close the polygon.
+| Item | Status |
+| --- | --- |
+| **3-minute deployment walkthrough** | **Not published yet** — no YouTube (or other) link is available in this repository. |
 
-### Phase 2: Generating the GeoJSON
-* **Action:** Exporting the OSM data into clean `[Longitude, Latitude]` GeoJSON format.
-* **Warning:** Never use `[Latitude, Longitude]` — the WIA engine requires strict GeoJSON X/Y adherence.
+Until the video is live, use the written path:
 
-### Phase 3: "Nesting" via the WIA Admin Panel
-* **Concept:** A building is just a shell. "Nesting" is how we add the intelligence.
-* **Example (Joked Complex):** 1. Define the Parent Node (The Complex).
-    2. Define Internal Nodes (Restaurants, Labs, Game Centers).
-    3. Assign Utility Metadata (Power status, opening hours).
+* [Setup & Deployment Guide](../docs/SETUP_GUIDE.md) — install server + web, bootstrap admin
+* [Mapping Guide](./MAPPING_GUIDE.md) — OSM, Overpass, GeoJSON, admin nesting
 
-*Remember: Garbage data in, garbage routing out. Map with integrity.*
+When the masterclass is recorded, maintainers should paste the URL below and update [tutorials/README.md](./README.md).
+
+```
+Video URL: (pending — add https://youtube.com/... or similar)
+```
+
+## Phase 1: OpenStreetMap (OSM) extraction
+
+* **Tools:** Overpass Turbo / iD Editor ([kit/overpass_queries.txt](../kit/overpass_queries.txt))
+* **Action:** Trace building footprints and footpaths from satellite imagery.
+* **Rule:** Close polygons — first and last coordinates must match.
+
+## Phase 2: Generating GeoJSON
+
+* Export OSM data as GeoJSON with `[longitude, latitude]` order (RFC 7946).
+* **Never** use `[latitude, longitude]` in GeoJSON files.
+
+Place campus files in [server/public/data/](../server/public/data/README.md):
+
+* `sample.geojson` — locations
+* `campus-routing.geojson` — routing graph
+
+## Phase 3: Nesting via the WIA admin panel
+
+A building is a shell; **nesting** adds intelligence inside it.
+
+1. Define the parent node (complex / block).
+2. Add internal nodes (shops, labs, halls).
+3. Assign utility metadata (power, accessibility, hours).
+
+*Garbage data in, garbage routing out. Map with integrity.*
+
+## Help
+
+* [Maintainers](../docs/MAINTAINERS.md) — contact and governance
+* [Contributing](../docs/CONTRIBUTING.md) — code contributions

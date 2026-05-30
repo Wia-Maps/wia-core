@@ -8,7 +8,7 @@ Security fixes are applied on the `main` branch. Release tags will be noted in G
 
 **Do not** open public GitHub issues for undisclosed security problems.
 
-Email or DM the repository maintainers with:
+Email the addresses listed in [docs/MAINTAINERS.md](docs/MAINTAINERS.md) with:
 
 * Description and impact
 * Steps to reproduce

@@ -46,12 +46,17 @@ Then register an admin via the API and open http://localhost:5173/admin. Full st
 
 Templates and extraction scripts live in `/kit` for NACOS-scale campus rollouts.
 
+## Maintainers
+
+Contact and governance: [docs/MAINTAINERS.md](docs/MAINTAINERS.md) (update placeholder emails before publishing). Security: [SECURITY.md](SECURITY.md).
+
 ## Documentation
 
 - [The WIA Manifesto](docs/MANIFESTO.md)
 - [Setup & Deployment Guide](docs/SETUP_GUIDE.md)
 - [Technical Specification](docs/TECHNICAL_SPEC.md)
 - [Contributing](docs/CONTRIBUTING.md)
+- [Tutorials index](tutorials/README.md) — includes **video status** (masterclass not published yet)
 - [WIA Academy](tutorials/WIA_ACADEMY.md)
 - [Mapping Guide](tutorials/MAPPING_GUIDE.md)
 - [Server README](server/README.md) · [Web README](web/README.md)
@@ -59,6 +64,8 @@ Templates and extraction scripts live in `/kit` for NACOS-scale campus rollouts.
 ## Security
 
 Report vulnerabilities per [SECURITY.md](SECURITY.md). Never commit `.env` files or real API secrets.
+
+Pre-release audit: [docs/OPEN_SOURCE_CHECKLIST.md](docs/OPEN_SOURCE_CHECKLIST.md).
 
 ## License
 
