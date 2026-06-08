@@ -25,9 +25,9 @@ Follow [Mapping Guide](./MAPPING_GUIDE.md):
 
 * Trace buildings and footpaths on [OpenStreetMap](https://www.openstreetmap.org/)
 * Export with [Overpass Turbo](https://overpass-turbo.eu/) and `kit/overpass_queries.txt`
-* Split into `sample.geojson` (locations) and `campus-routing.geojson` (routing)
-* Add buildings OSM missed using **Map Coordinate** and manual GeoJSON edits
-* Attach **utilities** metadata in feature properties
+* Save the export as a **single** `sample.geojson` FeatureCollection (buildings, paths, and nodes together)
+* Add OSM gaps with **Map Coordinate** and manual GeoJSON edits
+* Import via **Admin → Datasets** — the upload engine auto-splits geometry (see Mapping Guide)
 
 ### Step 3 — Operate via admin dashboard
 

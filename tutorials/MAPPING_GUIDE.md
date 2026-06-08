@@ -44,21 +44,30 @@ GeoJSON always uses **`[longitude, latitude]`** (X, Y). Swapped coordinates plac
 
 ---
 
-## 4. Split into WIA datasets
+## 4. One file — `sample.geojson`
 
-WIA stores two dataset types:
+You do **not** need to manually split Overpass output into two files. Export one **FeatureCollection** and save it as:
 
-| File | Dataset | Contents |
+```
+server/public/data/sample.geojson
+```
+
+When you import through **Admin → Datasets**, the upload engine **auto-splits** features by geometry:
+
+| Geometry | Routed to | Examples |
 | --- | --- | --- |
-| `server/public/data/sample.geojson` | `locations` | Building footprints, POIs, nested locations |
-| `server/public/data/campus-routing.geojson` | `routing` | Pedestrian graph (nodes + edges) |
+| **Polygon** / MultiPolygon | **Locations** | Building footprints, campus zones |
+| **LineString** (with `highway`, `kind=edge`, or `from`/`to`) | **Routing** | Footpaths, walkable edges |
+| **Point** (with `node_id`, `kind=node`, `entrance`, etc.) | **Routing** | Graph nodes, entrances |
+| **Point** (otherwise) | **Locations** | POIs, amenities |
 
-From your Overpass export:
+The admin UI also derives `properties.name` and `properties.type` on location features when missing (from OSM tags like `building`, `amenity`).
 
-* **Locations:** Polygons and POI features with `properties.name` and `properties.type`.
-* **Routing:** Point nodes with `properties.node_id`; LineString edges with `from` / `to` referencing those nodes, or `highway` / `kind=edge` for inferred segments.
+MongoDB still stores two logical datasets (`locations` and `routing`) — splitting happens at import time, not in your editor.
 
-Details: [server/public/data/README.md](../server/public/data/README.md).
+> **Repo note:** `campus-routing.geojson` in this repository is only a **minimal bootstrap stub** so the API can start before your first import. Maintainers update **`sample.geojson`** with the real campus export; they do not need a separate routing file for normal workflow.
+
+See [server/public/data/README.md](../server/public/data/README.md).
 
 ---
 
@@ -136,7 +145,7 @@ Add operational metadata under `properties.utilities` (see [TECHNICAL_SPEC](../d
 
 ### Option A — Edit files locally
 
-1. Open `sample.geojson` or `campus-routing.geojson` in a text editor or QGIS.
+1. Open `sample.geojson` in a text editor or QGIS.
 2. Append or edit features; validate JSON.
 3. **First boot:** Replace seed files, restart server.
 4. **Existing database:** Import via **Admin → Datasets** (see [Admin Guide](./ADMIN_GUIDE.md)).
@@ -156,8 +165,9 @@ Add operational metadata under `properties.utilities` (see [TECHNICAL_SPEC](../d
 
 | Scenario | Action |
 | --- | --- |
-| Fresh MongoDB (no prior seed) | Replace files under `server/public/data/`, start server |
-| Database already seeded | **Admin → Datasets** import or bulk upsert |
+| **Recommended** | Save Overpass export as `sample.geojson` → **Admin → Datasets** → import mixed FeatureCollection (auto-split) |
+| Fresh MongoDB, file-based seed | Replace `server/public/data/sample.geojson`, restart server (locations only from file; routing stub ships separately until you import) |
+| Existing database | **Admin → Datasets** import — same single-file auto-split |
 
 Seed files are only read automatically when no dataset revision exists yet.
 
@@ -181,7 +191,8 @@ Full steps: [Admin Guide](./ADMIN_GUIDE.md).
 - [ ] Campus bbox verified on Overpass
 - [ ] Building polygons closed on OSM
 - [ ] GeoJSON uses `[longitude, latitude]`
-- [ ] `sample.geojson` and `campus-routing.geojson` validate
+- [ ] Single `sample.geojson` export ready (polygons + paths + nodes)
+- [ ] GeoJSON uses `[longitude, latitude]`
 - [ ] OSM gaps filled via Map Coordinate where needed
 - [ ] `utilities` set on key buildings
 - [ ] `web/src/config/client.ts` center/zoom matches campus

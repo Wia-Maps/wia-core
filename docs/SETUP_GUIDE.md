@@ -30,11 +30,13 @@ Follow this guide to deploy an isolated instance of the Smart Campus Operating S
    cd wia-core
    ```
 
-3. **Campus GeoJSON (maintainers):** Drop the full Achievers University (or your campus) export into:
-   - `server/public/data/sample.geojson` (locations)
-   - `server/public/data/campus-routing.geojson` (routing graph)
+3. **Campus GeoJSON (maintainers):** Save the full Overpass export as a single mixed file:
 
-   See [server/public/data/README.md](../server/public/data/README.md). Minimal placeholders ship so the API can boot before the real bundle is added.
+   - `server/public/data/sample.geojson`
+
+   Import via **Admin → Datasets** — the engine auto-splits **polygons** into locations and **LineString / routing Point** features into the routing graph. You do not need a separate routing export file for normal workflow.
+
+   See [server/public/data/README.md](../server/public/data/README.md). A minimal `campus-routing.geojson` stub remains for API bootstrap only.
 
 4. **Configure the web client** in `web/src/config/client.ts` (`campus_id`, map center, theme). The file `kit/config.template.json` is a planning mirror only; the app reads `client.ts` at runtime.
 

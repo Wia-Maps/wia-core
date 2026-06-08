@@ -7,7 +7,7 @@ Use this before tagging a public release.
 - [ ] Replace placeholders in [MAINTAINERS.md](./MAINTAINERS.md) (names, GitHub, email)
 - [ ] Set real GitHub org/repo URLs in MAINTAINERS and README
 - [ ] Rotate Cloudinary keys if old values were ever committed
-- [ ] Drop full Achievers GeoJSON into `server/public/data/sample.geojson` and `campus-routing.geojson`
+- [ ] Drop full Achievers campus export into `server/public/data/sample.geojson` (single mixed GeoJSON; import via Admin → Datasets)
 - [ ] Add Map Coordinate screenshot to `tutorials/assets/map-coordinate-app.png`
 - [ ] Bump **Last reviewed** in tutorials when UI or API changes
 

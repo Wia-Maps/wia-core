@@ -1,30 +1,48 @@
 # Campus GeoJSON seed data
 
-The API seeds MongoDB map datasets from these files on first boot when no revision exists yet.
+The API seeds MongoDB map datasets from files under this directory on **first boot** when no revision exists yet.
 
-## Files
+## Primary campus file — `sample.geojson`
 
-| File | Dataset | Purpose |
+Maintainers ship the **full campus export** as a single FeatureCollection:
+
+```
+server/public/data/sample.geojson
+```
+
+This is typically the raw Overpass Turbo GeoJSON export (buildings as polygons, footpaths as lines, nodes as points — all in one file).
+
+### Admin import auto-split
+
+When you import through **Admin → Datasets**, the upload engine splits one mixed file automatically:
+
+| Detected geometry | Dataset | Notes |
 | --- | --- | --- |
-| `sample.geojson` | `locations` | Building footprints, POIs, and nested location features |
-| `campus-routing.geojson` | `routing` | Pedestrian routing graph (nodes, edges, entrances) |
-| `campus-routing-mock.geojson` | `routing` (fallback) | Optional alternate routing fixture if the primary file is absent or invalid |
+| Polygon / MultiPolygon | `locations` | Buildings, zones, footprints |
+| LineString (+ `highway`, `kind=edge`, or `from`/`to`) | `routing` | Walkable edges |
+| Point (+ `node_id`, `entrance`, `kind=node`, etc.) | `routing` | Graph / entrance nodes |
+| Other points | `locations` | POIs |
+
+You do **not** need to manually separate routing into a second file for normal workflow.
+
+## Bootstrap stub — `campus-routing.geojson`
+
+A **minimal routing graph** used only so a fresh clone can boot the API before the first real import. Adopters replace campus data via `sample.geojson` + admin import, not by editing this stub.
+
+`campus-routing-mock.geojson` is an optional fallback path if the primary routing seed file is missing.
 
 ## Achievers University (reference campus)
 
-Replace the bundled starter fixtures with your full **Achievers University** export:
-
-1. Export or compile your campus geometry into RFC 7946 GeoJSON (`[longitude, latitude]` order).
-2. Overwrite `sample.geojson` with your locations / structures collection.
-3. Overwrite `campus-routing.geojson` with your routing graph.
-4. Restart the server (or import via **Admin → Datasets** if the database was already seeded).
-
-The repository ships minimal valid placeholders so a fresh clone boots without MongoDB errors. The real campus bundle should be dropped in by maintainers who have the production dataset.
+1. Export campus geometry from Overpass ([kit/overpass_queries.txt](../../kit/overpass_queries.txt)).
+2. Save as **`sample.geojson`** (single mixed FeatureCollection).
+3. Import via **Admin → Datasets**, or overwrite this file before first DB seed and restart the server.
+4. Optionally trace the same features on OSM for community consistency.
 
 ## Validation rules
 
-- **Locations:** each feature needs `properties.name` and `properties.type`.
-- **Routing:** Point nodes need `properties.node_id`; edges need `from` / `to` referencing existing nodes, or `highway` / `kind=edge` LineStrings for inferred segments.
+- **Locations:** each feature needs `properties.name` and `properties.type` (admin import can derive these from OSM tags).
+- **Routing:** Point nodes need routing tags; edges need `from`/`to` or highway-style LineStrings.
 - **Polygons:** first and last ring coordinates must match (closed rings).
+- **Coordinates:** `[longitude, latitude]` (RFC 7946).
 
-See [docs/TECHNICAL_SPEC.md](../../docs/TECHNICAL_SPEC.md) and [kit/overpass_queries.txt](../../kit/overpass_queries.txt).
+See [docs/TECHNICAL_SPEC.md](../../docs/TECHNICAL_SPEC.md) and [tutorials/MAPPING_GUIDE.md](../../tutorials/MAPPING_GUIDE.md).

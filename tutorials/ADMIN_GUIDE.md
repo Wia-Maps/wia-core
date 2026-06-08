@@ -60,13 +60,15 @@ Sign in at http://localhost:5173/admin with the same email and password.
 
 ## 3. Admin → Datasets (`/admin/datasets`)
 
-Import campus geometry produced in the [Mapping Guide](./MAPPING_GUIDE.md).
+Import campus geometry from [Mapping Guide](./MAPPING_GUIDE.md).
 
 1. Open **Datasets** from the admin sidebar.
-2. Select **locations** — import or bulk-upsert `sample.geojson`.
-3. Select **routing** — import `campus-routing.geojson`.
-4. The server validates geometry (closed polygons, `[lng, lat]`, connected routing nodes).
-5. **Publish** the revision.
+2. Use **Import** with your mixed Overpass export (one `FeatureCollection` — typically saved as `sample.geojson`).
+3. The upload engine **auto-splits**:
+   - **Polygons** → locations (buildings, areas)
+   - **LineStrings** and routing **Points** (`node_id`, `highway`, `from`/`to`, etc.) → routing graph
+4. Review the split counts shown in the import preview.
+5. **Publish** — both `locations` and `routing` datasets update together.
 6. Reload **/map** — buildings and paths should appear.
 
 **Utilities panel** (same page):

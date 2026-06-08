@@ -34,8 +34,10 @@ Two dataset types are stored in MongoDB and seeded from `server/public/data/` on
 
 | Type | Seed file | Content |
 | --- | --- | --- |
-| `locations` | `sample.geojson` | Buildings, POIs, nested locations |
-| `routing` | `campus-routing.geojson` | Pedestrian graph |
+| `locations` | `sample.geojson` | Buildings, POIs (polygons and non-routing points) |
+| `routing` | `campus-routing.geojson` | Bootstrap stub only until first import |
+
+**Single-file import:** Admins upload one mixed Overpass-style `FeatureCollection` (e.g. `sample.geojson`). The admin upload engine auto-splits by geometry — polygons to locations, LineStrings and routing Points to routing. See [tutorials/MAPPING_GUIDE.md](../tutorials/MAPPING_GUIDE.md).
 
 Admin APIs under `/api/v1/admin/map/*` support feature CRUD, bulk upsert, bundle import, and revision history.
 
