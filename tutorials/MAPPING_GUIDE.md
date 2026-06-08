@@ -2,7 +2,7 @@
 
 > **Documentation notice**
 >
-> **Last reviewed:** May 2026  
+> **Last reviewed:** June 2026
 > WIA changes in this repository faster than external copies of these guides.  
 > If a tutorial conflicts with the code or [TECHNICAL_SPEC](../docs/TECHNICAL_SPEC.md), **trust the repo**.
 
@@ -25,7 +25,7 @@ Bad OSM geometry produces bad routing. Verify footprints and paths on satellite 
 3. **Buildings:** Draw a closed polygon over the footprint. Tag `building=yes` or a specific type (e.g. `building=university`).
 4. **Footpaths:** Draw lines along real walkable routes. Tag `highway=footway` or `highway=path` — not across grass unless people actually walk there.
 5. **Close every polygon:** The first and last vertex must be identical.
-6. **Save** with a clear changeset comment (e.g. *Achievers University — footpaths for WIA*).
+6. **Save** with a clear changeset comment (e.g. _Achievers University — footpaths for WIA_).
 7. Wait for Overpass to sync (usually minutes; up to ~1 hour).
 
 ---
@@ -54,12 +54,12 @@ server/public/data/sample.geojson
 
 When you import through **Admin → Datasets**, the upload engine **auto-splits** features by geometry:
 
-| Geometry | Routed to | Examples |
-| --- | --- | --- |
-| **Polygon** / MultiPolygon | **Locations** | Building footprints, campus zones |
-| **LineString** (with `highway`, `kind=edge`, or `from`/`to`) | **Routing** | Footpaths, walkable edges |
-| **Point** (with `node_id`, `kind=node`, `entrance`, etc.) | **Routing** | Graph nodes, entrances |
-| **Point** (otherwise) | **Locations** | POIs, amenities |
+| Geometry                                                     | Routed to     | Examples                          |
+| ------------------------------------------------------------ | ------------- | --------------------------------- |
+| **Polygon** / MultiPolygon                                   | **Locations** | Building footprints, campus zones |
+| **LineString** (with `highway`, `kind=edge`, or `from`/`to`) | **Routing**   | Footpaths, walkable edges         |
+| **Point** (with `node_id`, `kind=node`, `entrance`, etc.)    | **Routing**   | Graph nodes, entrances            |
+| **Point** (otherwise)                                        | **Locations** | POIs, amenities                   |
 
 The admin UI also derives `properties.name` and `properties.type` on location features when missing (from OSM tags like `building`, `amenity`).
 
@@ -79,7 +79,7 @@ Some structures are missing, misaligned, or not yet approved on OSM. Use the **M
 
 ![Map Coordinate app — copy lat/lng from your position](./assets/map-coordinate-app.png)
 
-*Replace `tutorials/assets/map-coordinate-app.png` with a team screenshot showing the coordinate readout.*
+_Replace `tutorials/assets/map-coordinate-app.png` with a team screenshot showing the coordinate readout._
 
 ### Workflow
 
@@ -102,10 +102,10 @@ Use this for **new buildings**, **utility fields**, or corrections Overpass/OSM 
 
 Each location feature must include:
 
-| Field | Required | Example |
-| --- | --- | --- |
-| `properties.name` | Yes | `"Block C"` |
-| `properties.type` | Yes | `"Building"` |
+| Field                   | Required    | Example          |
+| ----------------------- | ----------- | ---------------- |
+| `properties.name`       | Yes         | `"Block C"`      |
+| `properties.type`       | Yes         | `"Building"`     |
 | `id` or `properties.id` | Recommended | `"block-c-main"` |
 
 ### Utilities object
@@ -130,18 +130,18 @@ Add operational metadata under `properties.utilities` (see [TECHNICAL_SPEC](../d
     "type": "Polygon",
     "coordinates": [
       [
-        [5.58390, 7.16460],
-        [5.58410, 7.16460],
-        [5.58410, 7.16480],
-        [5.58390, 7.16480],
-        [5.58390, 7.16460]
+        [5.5839, 7.1646],
+        [5.5841, 7.1646],
+        [5.5841, 7.1648],
+        [5.5839, 7.1648],
+        [5.5839, 7.1646]
       ]
     ]
   }
 }
 ```
 
-*Note: Polygon rings must close (first point = last point). Coordinates are `[lng, lat]`.*
+_Note: Polygon rings must close (first point = last point). Coordinates are `[lng, lat]`._
 
 ### Option A — Edit files locally
 
@@ -163,11 +163,11 @@ Add operational metadata under `properties.utilities` (see [TECHNICAL_SPEC](../d
 
 ## 7. Load into WIA
 
-| Scenario | Action |
-| --- | --- |
-| **Recommended** | Save Overpass export as `sample.geojson` → **Admin → Datasets** → import mixed FeatureCollection (auto-split) |
+| Scenario                       | Action                                                                                                                                 |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| **Recommended**                | Save Overpass export as `sample.geojson` → **Admin → Datasets** → import mixed FeatureCollection (auto-split)                          |
 | Fresh MongoDB, file-based seed | Replace `server/public/data/sample.geojson`, restart server (locations only from file; routing stub ships separately until you import) |
-| Existing database | **Admin → Datasets** import — same single-file auto-split |
+| Existing database              | **Admin → Datasets** import — same single-file auto-split                                                                              |
 
 Seed files are only read automatically when no dataset revision exists yet.
 
@@ -200,7 +200,7 @@ Full steps: [Admin Guide](./ADMIN_GUIDE.md).
 
 ## Reviewers
 
-| Area | Reviewer |
-| --- | --- |
-| Mapping / OSM / GeoJSON | Japheth O. Egbedele |
-| Admin / operations | Adelola Faith Adeyekun |
+| Area                    | Reviewer               |
+| ----------------------- | ---------------------- |
+| Mapping / OSM / GeoJSON | Japheth O. Egbedele    |
+| Admin / operations      | Adelola Faith Adeyekun |

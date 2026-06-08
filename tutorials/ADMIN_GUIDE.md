@@ -2,7 +2,7 @@
 
 > **Documentation notice**
 >
-> **Last reviewed:** May 2026  
+> **Last reviewed:** June 2026
 > WIA changes in this repository faster than external copies of these guides.  
 > If a tutorial conflicts with the code or [SETUP_GUIDE](../docs/SETUP_GUIDE.md), **trust the repo**.
 
@@ -34,10 +34,10 @@ npm install
 npm run dev
 ```
 
-| URL | Purpose |
-| --- | --- |
-| http://localhost:5173/map | Public campus map |
-| http://localhost:5173/admin | Admin workspace |
+| URL                         | Purpose           |
+| --------------------------- | ----------------- |
+| http://localhost:5173/map   | Public campus map |
+| http://localhost:5173/admin | Admin workspace   |
 
 ---
 
@@ -51,8 +51,8 @@ curl -X POST http://localhost:5000/api/v1/admin/register \
   -d '{"email":"admin@yourcampus.edu.ng","password":"secure-temporary-password"}'
 ```
 
-* Returns `409` if that email already exists.
-* No `X-Initialization-Key` header is required.
+- Returns `409` if that email already exists.
+- No `X-Initialization-Key` header is required.
 
 Sign in at http://localhost:5173/admin with the same email and password.
 
@@ -73,8 +73,8 @@ Import campus geometry from [Mapping Guide](./MAPPING_GUIDE.md).
 
 **Utilities panel** (same page):
 
-* **Raw JSON** — edit full feature objects (e.g. `properties.utilities`).
-* **History** — restore a previous dataset revision if an import fails.
+- **Raw JSON** — edit full feature objects (e.g. `properties.utilities`).
+- **History** — restore a previous dataset revision if an import fails.
 
 **Manual edits without re-exporting OSM:** create a new feature in the dataset wizard, use the map geometry editor, or paste JSON in Raw JSON mode.
 
@@ -97,9 +97,9 @@ OSM provides the outer shell; nesting and metadata happen here.
 
 Campus **utility layer** — live power status students see on the map.
 
-* Bulk status reports for multiple locations
-* Scheduled power updates
-* Location-level locks for controlled changes
+- Bulk status reports for multiple locations
+- Scheduled power updates
+- Location-level locks for controlled changes
 
 Requires locations to exist before power can be attached meaningfully.
 
@@ -109,9 +109,9 @@ Requires locations to exist before power can be attached meaningfully.
 
 Pedestrian **routing operations** as the campus scales.
 
-* Review route **candidates** from user telemetry
-* Approve or reject suggested path corrections
-* Manage route recording workflows
+- Review route **candidates** from user telemetry
+- Approve or reject suggested path corrections
+- Manage route recording workflows
 
 Optional at day one; more important after students begin navigation.
 
@@ -133,9 +133,9 @@ Workspace preferences and admin configuration. Review alongside your deployment 
 
 Adopters changing university:
 
-* `campus_id` — must align with server/analytics campus ID
-* `map.center`, zoom, bounds
-* `theme` colors and feature flags
+- `campus_id` — must align with server/analytics campus ID
+- `map.center`, zoom, bounds
+- `theme` colors and feature flags
 
 The file `kit/config.template.json` is a planning mirror only; the app reads `client.ts` at runtime.
 
@@ -145,11 +145,11 @@ The file `kit/config.template.json` is a planning mirror only; the app reads `cl
 
 When moving off localhost:
 
-* Set `VITE_API_BASE_URL` to your HTTPS API (see [web/README.md](../web/README.md))
-* Set server `CLIENT_ORIGIN` to your front-end origin
-* Deploy over **HTTPS** (required for PWA and push)
-* Use a campus subdomain (e.g. `map.university.edu.ng`)
-* QR codes at building entrances for student onboarding
+- Set `VITE_API_BASE_URL` to your HTTPS API (see [web/README.md](../web/README.md))
+- Set server `CLIENT_ORIGIN` to your front-end origin
+- Deploy over **HTTPS** (required for PWA and push)
+- Use a campus subdomain (e.g. `map.university.edu.ng`)
+- QR codes at building entrances for student onboarding
 
 Full lifecycle: [SETUP_GUIDE](../docs/SETUP_GUIDE.md) Phase 3.
 
@@ -166,7 +166,7 @@ Full lifecycle: [SETUP_GUIDE](../docs/SETUP_GUIDE.md) Phase 3.
 
 ## Reviewers
 
-| Area | Reviewer |
-| --- | --- |
-| Mapping / OSM / GeoJSON | Japheth O. Egbedele |
-| Admin / operations | Adelola Faith Adeyekun |
+| Area                    | Reviewer               |
+| ----------------------- | ---------------------- |
+| Mapping / OSM / GeoJSON | Japheth O. Egbedele    |
+| Admin / operations      | Adelola Faith Adeyekun |
