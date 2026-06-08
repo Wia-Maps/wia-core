@@ -8,7 +8,8 @@ Use this before tagging a public release.
 - [ ] Set real GitHub org/repo URLs in MAINTAINERS and README
 - [ ] Rotate Cloudinary keys if old values were ever committed
 - [ ] Drop full Achievers GeoJSON into `server/public/data/sample.geojson` and `campus-routing.geojson`
-- [ ] Publish WIA Academy video; update [tutorials/WIA_ACADEMY.md](../tutorials/WIA_ACADEMY.md)
+- [ ] Add Map Coordinate screenshot to `tutorials/assets/map-coordinate-app.png`
+- [ ] Bump **Last reviewed** in tutorials when UI or API changes
 
 ## Legal and community
 
@@ -23,7 +24,7 @@ Use this before tagging a public release.
 - [x] Root README with monorepo layout and quick start
 - [x] SETUP_GUIDE (two terminals, correct ports)
 - [x] TECHNICAL_SPEC, server/README, web/README, python_worker/README
-- [x] Mapping written tutorials; **video pending**
+- [x] Text tutorials (Mapping + Admin guides, no video dependency)
 
 ## Code hygiene
 

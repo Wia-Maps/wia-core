@@ -1,51 +1,59 @@
-# WIA Academy: Mapping Your Campus
+# WIA Academy
 
-Welcome to the WIA mapping workflow. Building a digital twin requires precision and hierarchy. This academy teaches how to extract global data and structure it for the WIA engine.
+> **Documentation notice**
+>
+> **Last reviewed:** May 2026  
+> WIA changes in this repository faster than external copies of these guides.  
+> If a tutorial conflicts with the code, [SETUP_GUIDE](../docs/SETUP_GUIDE.md), or package READMEs, **trust the repo**.
 
-## Masterclass video
+Building a campus digital twin requires precision and hierarchy. This academy is **text-first** and updated in the repo when the product changes — no stale video to maintain.
 
-| Item | Status |
-| --- | --- |
-| **3-minute deployment walkthrough** | **Not published yet** — no YouTube (or other) link is available in this repository. |
+## Learning path
 
-Until the video is live, use the written path:
+### Step 1 — Install WIA locally
 
-* [Setup & Deployment Guide](../docs/SETUP_GUIDE.md) — install server + web, bootstrap admin
-* [Mapping Guide](./MAPPING_GUIDE.md) — OSM, Overpass, GeoJSON, admin nesting
+Follow [Setup & Deployment Guide](../docs/SETUP_GUIDE.md):
 
-When the masterclass is recorded, maintainers should paste the URL below and update [tutorials/README.md](./README.md).
+* Fork and clone `wia-core`
+* `server/` on port **5000**, `web/` on port **5173**
+* Register admin via `POST /api/v1/admin/register`
+* Sign in at http://localhost:5173/admin
 
-```
-Video URL: (pending — add https://youtube.com/... or similar)
-```
+### Step 2 — Map your campus (geometry)
 
-## Phase 1: OpenStreetMap (OSM) extraction
+Follow [Mapping Guide](./MAPPING_GUIDE.md):
 
-* **Tools:** Overpass Turbo / iD Editor ([kit/overpass_queries.txt](../kit/overpass_queries.txt))
-* **Action:** Trace building footprints and footpaths from satellite imagery.
-* **Rule:** Close polygons — first and last coordinates must match.
+* Trace buildings and footpaths on [OpenStreetMap](https://www.openstreetmap.org/)
+* Export with [Overpass Turbo](https://overpass-turbo.eu/) and `kit/overpass_queries.txt`
+* Split into `sample.geojson` (locations) and `campus-routing.geojson` (routing)
+* Add buildings OSM missed using **Map Coordinate** and manual GeoJSON edits
+* Attach **utilities** metadata in feature properties
 
-## Phase 2: Generating GeoJSON
+### Step 3 — Operate via admin dashboard
 
-* Export OSM data as GeoJSON with `[longitude, latitude]` order (RFC 7946).
-* **Never** use `[latitude, longitude]` in GeoJSON files.
+Follow [Admin Guide](./ADMIN_GUIDE.md):
 
-Place campus files in [server/public/data/](../server/public/data/README.md):
+* Import datasets at **Admin → Datasets**
+* Nest POIs at **Admin → Locations**
+* Manage power at **Admin → Power**; routes at **Admin → Routes**
+* Fork branding in `web/src/config/client.ts`
 
-* `sample.geojson` — locations
-* `campus-routing.geojson` — routing graph
+## Principles
 
-## Phase 3: Nesting via the WIA admin panel
-
-A building is a shell; **nesting** adds intelligence inside it.
-
-1. Define the parent node (complex / block).
-2. Add internal nodes (shops, labs, halls).
-3. Assign utility metadata (power, accessibility, hours).
-
-*Garbage data in, garbage routing out. Map with integrity.*
+* **Coordinate order:** GeoJSON uses `[longitude, latitude]` (RFC 7946).
+* **Closed polygons:** First ring vertex equals the last.
+* **Nesting:** OSM gives the shell; the admin panel adds intelligence inside buildings.
+* **Integrity:** Garbage data in, garbage routing out.
 
 ## Help
 
-* [Maintainers](../docs/MAINTAINERS.md) — contact and governance
-* [Contributing](../docs/CONTRIBUTING.md) — code contributions
+* [Maintainers](../docs/MAINTAINERS.md)
+* [Contributing](../docs/CONTRIBUTING.md)
+* [Technical Specification](../docs/TECHNICAL_SPEC.md)
+
+## Reviewers
+
+| Area | Reviewer |
+| --- | --- |
+| Mapping / OSM / GeoJSON | Japheth O. Egbedele |
+| Admin / operations | Adelola Faith Adeyekun |

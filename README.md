@@ -56,9 +56,10 @@ Contact and governance: [docs/MAINTAINERS.md](docs/MAINTAINERS.md). Security: [S
 - [Setup & Deployment Guide](docs/SETUP_GUIDE.md)
 - [Technical Specification](docs/TECHNICAL_SPEC.md)
 - [Contributing](docs/CONTRIBUTING.md)
-- [Tutorials index](tutorials/README.md) — includes **video status** (masterclass not published yet)
+- [Tutorials index](tutorials/README.md)
 - [WIA Academy](tutorials/WIA_ACADEMY.md)
 - [Mapping Guide](tutorials/MAPPING_GUIDE.md)
+- [Admin Guide](tutorials/ADMIN_GUIDE.md)
 - [Server README](server/README.md) · [Web README](web/README.md)
 
 ## Security

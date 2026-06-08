@@ -1,16 +1,31 @@
-# Tutorials
+# WIA Tutorials
 
-| Guide | Format | Status |
+> **Documentation notice**
+>
+> **Last reviewed:** May 2026  
+> WIA changes in this repository faster than external copies of these guides.  
+> If a tutorial conflicts with the code, [SETUP_GUIDE](../docs/SETUP_GUIDE.md), or package READMEs, **trust the repo**.  
+> Open a GitHub issue or contact [MAINTAINERS](../docs/MAINTAINERS.md) if a step is outdated.
+
+Maintainers: bump **Last reviewed** when you change admin UI, API routes, or GeoJSON validation.
+
+## Guides
+
+| Guide | Author focus | Description |
 | --- | --- | --- |
-| [WIA Academy](./WIA_ACADEMY.md) | Written walkthrough + **video slot** | Video not published yet |
-| [Mapping Guide](./MAPPING_GUIDE.md) | Written (OSM → GeoJSON → admin) | Complete |
+| [WIA Academy](./WIA_ACADEMY.md) | Both | Learning path and hub |
+| [Mapping Guide](./MAPPING_GUIDE.md) | Japheth O. Egbedele | OSM, Overpass, GeoJSON, manual edits, Map Coordinate app |
+| [Admin Guide](./ADMIN_GUIDE.md) | Adelola Faith Adeyekun | Local boot, admin dashboard, datasets, nesting, power, routes |
 
-## Video masterclass (planned)
+## Recommended order
 
-The **3-minute deployment** walkthrough referenced in [WIA_ACADEMY.md](./WIA_ACADEMY.md) does not have a public URL yet. Until it is recorded and uploaded:
+1. [Setup & Deployment](../docs/SETUP_GUIDE.md) — fork, env, two terminals  
+2. [Mapping Guide](./MAPPING_GUIDE.md) — campus geometry  
+3. [Admin Guide](./ADMIN_GUIDE.md) — import, enrich, operate  
 
-1. Follow [../docs/SETUP_GUIDE.md](../docs/SETUP_GUIDE.md) for local install.
-2. Use [MAPPING_GUIDE.md](./MAPPING_GUIDE.md) for campus geometry.
-3. Track the video in a GitHub issue titled `docs: publish WIA Academy masterclass video` (add the YouTube link to WIA_ACADEMY when ready).
+## Reviewers
 
-Maintainers: after upload, replace the placeholder in `WIA_ACADEMY.md` and remove the “planned” note here.
+| Area | Reviewer |
+| --- | --- |
+| Mapping / OSM / GeoJSON | Japheth O. Egbedele |
+| Admin / operations | Adelola Faith Adeyekun |
