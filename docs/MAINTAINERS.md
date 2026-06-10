@@ -5,7 +5,7 @@ Primary contacts for security reports, governance questions, and release coordin
 | Role | Name | GitHub | Email |
 | --- | --- | --- | --- |
 | Team Lead | Japheth O. Egbedele | [@Japheth_Egbedele](https://github.com/Japheth_Egbedele) | egbedelejapheth@gmail.com |
-| Campus / product | _Achievers WIA team_ | _org or handle_ | wia@yourcampus.edu.ng |
+|Lead Developer | Adelola F. Adeyekun | [@GOALLINNOOUT](https://github.com/GOALLINNOOUT) | adeyekunadelola0@gmail.com |
 
 ## How to reach us
 

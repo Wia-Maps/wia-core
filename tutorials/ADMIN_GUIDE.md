@@ -169,4 +169,4 @@ Full lifecycle: [SETUP_GUIDE](../docs/SETUP_GUIDE.md) Phase 3.
 | Area                    | Reviewer               |
 | ----------------------- | ---------------------- |
 | Mapping / OSM / GeoJSON | Japheth O. Egbedele    |
-| Admin / operations      | Adelola Faith Adeyekun |
+| Admin / operations      | Adelola F. Adeyekun |
